@@ -198,7 +198,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void DebugEx(object message, [CallerMemberName] string callerMemberName = "")
+        public void DebugEx(string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsDebugEnabled)
                 return;
@@ -396,7 +396,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void ErrorEx(object message, [CallerMemberName] string callerMemberName = "")
+        public void ErrorEx(string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
@@ -770,7 +770,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void InfoEx(object message, [CallerMemberName] string callerMemberName = "")
+        public void InfoEx(string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsInfoEnabled)
                 return;
@@ -968,7 +968,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void TraceEx(object message, [CallerMemberName] string callerMemberName = "")
+        public void TraceEx(string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsTraceEnabled)
                 return;
@@ -1158,7 +1158,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void WarnEx(object message, [CallerMemberName] string callerMemberName = "")
+        public void WarnEx(string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;
