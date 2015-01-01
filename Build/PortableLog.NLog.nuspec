@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>PortableLog.NLog</id>
+    <version>1.0.0</version>
+    <title>Portable Logging for NLog</title>
+    <authors>Andreas Gullberg Larsen</authors>
+    <owners>Andreas Gullberg Larsen</owners>
+    <licenseUrl>https://github.com/anjdreas/PortableLog/blob/dev/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/anjdreas/PortableLog</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Wire up your logging with the NLog logging framework.</description>
+    <summary>Adapter for NLog logging framework.</summary>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright © 2015 Andreas Gullberg Larsen</copyright>
+    <language>en-US</language>
+    <tags>log logging portable pcl interface wrapper adapter</tags>
+    <dependencies>
+      <dependency id="PortableLog.Core" version="1.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Artifacts\Src\AnyCPU_Release\PortableLog.NLog\**\PortableLog.NLog.dll" target="lib" />
+    <file src="Src\PortableLog.NLog\**\*.cs" exclude="Src\**\obj\**\*.cs" target="src" />
+  </files>
+</package>

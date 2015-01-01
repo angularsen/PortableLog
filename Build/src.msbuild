@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CompileProjects" ToolsVersion="12.0">
+  <Import Project="paths.msbuild" />
+  
+  <PropertyGroup>
+    <Platform>AnyCPU</Platform>
+    <Configuration>Release</Configuration>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+    <AllProjects>
+      $(SrcPath)\PortableLog.NLog\PortableLog.NLog-net40.csproj;
+      $(SrcPath)\PortableLog.NLog\PortableLog.NLog-net45.csproj;
+      $(SrcPath)\PortableLog.Core\PortableLog.Core-portable-net40-profile328.csproj;
+      $(SrcPath)\PortableLog.Core\PortableLog.Core-portable-net45-profile259.csproj
+    </AllProjects>
+  </PropertyGroup>
+ 
+  <Target Name="CleanAndBuild" DependsOnTargets="Clean;CompileProjects" />
+   
+  <Target Name="Clean">
+    <MSBuild Projects="$(AllProjects)" Targets="Clean" />
+    <RemoveDir Directories="$(SrcBinPath)" />
+  </Target>  
+
+  <Target Name="CompileProjects">
+
+    <MSBuild Projects="$(AllProjects)"
+       Properties="Platform=$(Platform);Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion);Retries=3;RetryDelayMilliseconds=50;SolutionDir=$(SolutionDir)"
+       Targets="Build">
+    </MSBuild>
+  </Target>
+</Project>

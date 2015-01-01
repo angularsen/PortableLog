@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>PortableLog.Core</id>
+    <version>1.0.0</version>
+    <title>Portable Logging</title>
+    <authors>Andreas Gullberg Larsen</authors>
+    <owners>Andreas Gullberg Larsen</owners>
+    <licenseUrl>https://github.com/anjdreas/PortableLog/blob/dev/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/anjdreas/PortableLog</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>    
+    <description>Light-weight and portable logging interface. Combine with existing PortableLog adapters for logging frameworks or write your own.</description>
+    <summary>Light-weight and portable logging interface.</summary>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright © 2015 Andreas Gullberg Larsen</copyright>
+    <language>en-US</language>
+    <tags>log logging portable pcl interface wrapper adapter</tags>
+    <dependencies>
+      <group>
+      </group>
+      <group targetFramework="portable-net40+sl50+win+wpa81+wp80">
+        <dependency id="Microsoft.Bcl" version="1.1.9" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Artifacts\Src\AnyCPU_Release\PortableLog.Core\**\PortableLog.Core.dll" target="lib" />
+    <file src="Src\PortableLog.Core\**\*.cs" exclude="Src\**\obj\**\*.cs" target="src" />
+  </files>
+</package>
