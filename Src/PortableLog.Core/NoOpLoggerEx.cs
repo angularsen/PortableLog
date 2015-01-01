@@ -1,23 +1,3 @@
-#region License
-
-/*
- * Copyright © 2002-2009 the original author or authors.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-#endregion
-
 using System;
 
 namespace PortableLog.Core
@@ -25,12 +5,8 @@ namespace PortableLog.Core
     /// <summary>
     ///     Silently ignores all log messages.
     /// </summary>
-    /// <author>Gilles Bayon</author>
-    /// <author>Erich Eichinger</author>
     public sealed class NoOpLoggerEx : ILogEx
     {
-        #region IsXXXEnabled
-
         /// <summary>
         ///     Always returns <see langword="false" />.
         /// </summary>
@@ -79,10 +55,6 @@ namespace PortableLog.Core
             get { return false; }
         }
 
-        #endregion
-
-        #region Trace
-
         /// <summary>
         ///     Ignores message.
         /// </summary>
@@ -96,8 +68,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Trace(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Trace(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -106,7 +78,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Trace(Action<FormatMessageHandler> formatMessageCallback)
+        public void Trace(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -116,7 +88,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        public void Trace(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Trace(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -126,7 +98,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Trace(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -137,8 +109,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        public void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Trace(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -159,7 +131,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void TraceFormat(string format, Exception exception, params object[] args)
+        public void TraceFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -182,14 +154,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void TraceFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void TraceFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        #region Debug
 
         /// <summary>
         ///     Ignores message.
@@ -204,8 +172,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Debug(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Debug(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -214,7 +182,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Debug(Action<FormatMessageHandler> formatMessageCallback)
+        public void Debug(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -224,7 +192,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        public void Debug(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Debug(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -234,7 +202,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Debug(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -245,8 +213,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        public void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Debug(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -267,7 +235,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void DebugFormat(string format, Exception exception, params object[] args)
+        public void DebugFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -290,14 +258,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void DebugFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void DebugFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        #region Info
 
         /// <summary>
         ///     Ignores message.
@@ -312,8 +276,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Info(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Info(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -322,7 +286,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Info(Action<FormatMessageHandler> formatMessageCallback)
+        public void Info(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -332,7 +296,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        public void Info(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Info(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -342,7 +306,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Info(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -353,8 +317,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        public void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Info(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -375,7 +339,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void InfoFormat(string format, Exception exception, params object[] args)
+        public void InfoFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -398,14 +362,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void InfoFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void InfoFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        #region Warn
 
         /// <summary>
         ///     Ignores message.
@@ -420,8 +380,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Warn(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Warn(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -430,7 +390,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Warn(Action<FormatMessageHandler> formatMessageCallback)
+        public void Warn(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -440,7 +400,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        public void Warn(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Warn(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -450,7 +410,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Warn(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -461,8 +421,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        public void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Warn(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -483,7 +443,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void WarnFormat(string format, Exception exception, params object[] args)
+        public void WarnFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -506,14 +466,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void WarnFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void WarnFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        #region Error
 
         /// <summary>
         ///     Ignores message.
@@ -528,8 +484,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Error(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Error(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -538,7 +494,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Error(Action<FormatMessageHandler> formatMessageCallback)
+        public void Error(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -548,7 +504,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        public void Error(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Error(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -558,7 +514,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Error(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -569,8 +525,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        public void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Error(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -591,7 +547,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void ErrorFormat(string format, Exception exception, params object[] args)
+        public void ErrorFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -614,14 +570,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void ErrorFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        #region Fatal
 
         /// <summary>
         ///     Ignores message.
@@ -636,8 +588,8 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="e"></param>
-        public void Fatal(object message, Exception e)
+        /// <param name="exception"></param>
+        public void Fatal(Exception exception, object message)
         {
             // NOP - no operation
         }
@@ -646,7 +598,7 @@ namespace PortableLog.Core
         ///     Ignores message.
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Fatal(Action<FormatMessageHandler> formatMessageCallback)
+        public void Fatal(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -656,7 +608,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        public void Fatal(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public void Fatal(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -666,7 +618,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public void Fatal(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -677,8 +629,8 @@ namespace PortableLog.Core
         /// <param name="formatProvider">An <see cref="IFormatProvider" /> that supplies culture-specific formatting information.</param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        public void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public void Fatal(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             // NOP - no operation
         }
@@ -699,7 +651,7 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void FatalFormat(string format, Exception exception, params object[] args)
+        public void FatalFormat(Exception exception, string format, params object[] args)
         {
             // NOP - no operation
         }
@@ -722,28 +674,10 @@ namespace PortableLog.Core
         /// <param name="format">The format of the message object to log.<see cref="string.Format(string,object[])" /> </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of message format arguments</param>
-        public void FatalFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args)
+        public void FatalFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args)
         {
             // NOP - no operation
         }
-
-        #endregion
-
-        ///// <summary>
-        /////     Returns the global context for variables
-        ///// </summary>
-        //public IVariablesContext GlobalVariablesContext
-        //{
-        //    get { return new NoOpVariablesContext(); }
-        //}
-
-        ///// <summary>
-        /////     Returns the thread-specific context for variables
-        ///// </summary>
-        //public IVariablesContext ThreadVariablesContext
-        //{
-        //    get { return new NoOpVariablesContext(); }
-        //}
 
         public void DebugEx(object message, string callerName = "")
         {
@@ -757,7 +691,7 @@ namespace PortableLog.Core
         {
         }
 
-        public void ErrorEx(object message, Exception exception, string callerName = "")
+        public void ErrorEx(Exception exception, object message, string callerName = "")
         {
         }
 
@@ -777,15 +711,23 @@ namespace PortableLog.Core
         {
         }
 
+        public void TraceFormatEx(string format, object[] args, string callerMemberName = "")
+        {
+        }
+
         public void WarnEx(object message, string callerName = "")
         {
         }
 
-        public void WarnEx(object message, Exception exception, string callerName = "")
+        public void WarnEx(Exception exception, object message, string callerName = "")
         {
         }
 
         public void WarnFormatEx(string format, object[] args, string callerName = "")
+        {
+        }
+
+        public void WarnFormatEx(Exception exception, string format, object[] args, string callerMemberName = "")
         {
         }
     }

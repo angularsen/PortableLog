@@ -12,7 +12,7 @@ namespace PortableLog.NLog
     ///     NLog is a .NET logging library designed with simplicity and flexibility in mind.
     ///     http://www.nlog-project.org/
     /// </remarks>
-    public class NLogLogger : AbstractLogger, ILogEx
+    public sealed class NLogLogger : AbstractLogger, ILogEx
     {
         private static readonly Type DeclaringType = typeof (NLogLogger);
         private readonly NLogLib.Logger _logger;
@@ -24,7 +24,7 @@ namespace PortableLog.NLog
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal NLogLogger(NLogLib.Logger logger)
+        internal NLogLogger(NLogLib.Logger logger)
         {
             _logger = logger;
         }
@@ -96,7 +96,7 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Debug(object message)
@@ -107,13 +107,13 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Debug" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Debug" /> level including
         ///     the stack Debug of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        public override void Debug(object message, Exception exception)
+        public override void Debug(Exception exception, object message)
         {
             if (!IsDebugEnabled)
                 return;
@@ -121,22 +121,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Debug(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Debug(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Debug, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -144,15 +144,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        public override void Debug(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Debug(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Debug, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -163,16 +163,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Debug(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsDebugEnabled)
                 return;
             WriteInternal(LogLevel.Debug,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -184,29 +184,29 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        public override void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Debug(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsDebugEnabled)
                 return;
             WriteInternal(LogLevel.Debug,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
-        /// <param name="callerName"></param>
-        public void DebugEx(object message, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void DebugEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, callerName + ": " + message, null);
+            WriteInternal(LogLevel.Debug, callerMemberName + ": " + message, null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -221,11 +221,11 @@ namespace PortableLog.NLog
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Debug, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -237,16 +237,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void DebugFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void DebugFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Debug, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -257,11 +257,11 @@ namespace PortableLog.NLog
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Debug, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -269,31 +269,32 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public override void DebugFormat(string format, Exception exception, params object[] args)
+        public override void DebugFormat(Exception exception, string format, params object[] args)
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Debug, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Debug" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
-        /// <param name="callerName"></param>
-        public void DebugFormatEx(string format, object[] args, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void DebugFormatEx(string format, object[] args, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsDebugEnabled)
                 return;
-            WriteInternal(LogLevel.Debug, new StringFormatFormattedMessage(null, callerName + ": " + format, args), null);
+            WriteInternal(LogLevel.Debug, new StringFormatter(null, callerMemberName + ": " + format, args),
+                null);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Error(object message)
@@ -304,13 +305,13 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Error" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Error" /> level including
         ///     the stack Error of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        public override void Error(object message, Exception exception)
+        public override void Error(Exception exception, object message)
         {
             if (!IsErrorEnabled)
                 return;
@@ -318,22 +319,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Error(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Error(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Error, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -341,15 +342,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        public override void Error(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Error(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Error, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -360,16 +361,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Error(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsErrorEnabled)
                 return;
             WriteInternal(LogLevel.Error,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -381,36 +382,36 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        public override void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Error(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsErrorEnabled)
                 return;
             WriteInternal(LogLevel.Error,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
-        /// <param name="callerName"></param>
-        public void ErrorEx(object message, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void ErrorEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, callerName + ": " + message, null);
+            WriteInternal(LogLevel.Error, callerMemberName + ": " + message, null);
         }
 
-        public void ErrorEx(object message, Exception exception, [CallerMemberName] string callerName = "")
+        public void ErrorEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, callerName + ": " + message, exception);
+            WriteInternal(LogLevel.Error, callerMemberName + ": " + message, exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -425,11 +426,11 @@ namespace PortableLog.NLog
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Error, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -441,16 +442,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void ErrorFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Error, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -461,11 +462,11 @@ namespace PortableLog.NLog
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Error, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Error" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -473,31 +474,32 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public override void ErrorFormat(string format, Exception exception, params object[] args)
+        public override void ErrorFormat(Exception exception, string format, params object[] args)
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Error, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
-        /// <param name="callerName"></param>
-        public void ErrorFormatEx(string format, object[] args, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void ErrorFormatEx(string format, object[] args, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
-            WriteInternal(LogLevel.Error, new StringFormatFormattedMessage(null, callerName + ": " + format, args), null);
+            WriteInternal(LogLevel.Error, new StringFormatter(null, callerMemberName + ": " + format, args),
+                null);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Fatal" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Fatal(object message)
@@ -508,13 +510,13 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Fatal" /> level including
         ///     the stack Fatal of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        public override void Fatal(object message, Exception exception)
+        public override void Fatal(Exception exception, object message)
         {
             if (!IsFatalEnabled)
                 return;
@@ -522,22 +524,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Fatal(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Fatal(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Fatal, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -545,15 +547,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        public override void Fatal(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Fatal(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Fatal, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -564,16 +566,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Fatal(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsFatalEnabled)
                 return;
             WriteInternal(LogLevel.Fatal,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -585,17 +587,17 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        public override void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Fatal(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsFatalEnabled)
                 return;
             WriteInternal(LogLevel.Fatal,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -610,11 +612,11 @@ namespace PortableLog.NLog
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Fatal, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -626,16 +628,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void FatalFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void FatalFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Fatal, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -646,11 +648,11 @@ namespace PortableLog.NLog
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Fatal, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Fatal" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -658,15 +660,15 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public override void FatalFormat(string format, Exception exception, params object[] args)
+        public override void FatalFormat(Exception exception, string format, params object[] args)
         {
             if (!IsFatalEnabled)
                 return;
-            WriteInternal(LogLevel.Fatal, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Fatal, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Info(object message)
@@ -677,13 +679,13 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Info" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Info" /> level including
         ///     the stack Info of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        public override void Info(object message, Exception exception)
+        public override void Info(Exception exception, object message)
         {
             if (!IsInfoEnabled)
                 return;
@@ -691,22 +693,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Info(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Info(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Info, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -714,15 +716,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        public override void Info(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Info(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Info, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -733,16 +735,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Info(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsInfoEnabled)
                 return;
             WriteInternal(LogLevel.Info,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -754,29 +756,29 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        public override void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Info(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsInfoEnabled)
                 return;
             WriteInternal(LogLevel.Info,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
-        /// <param name="callerName"></param>
-        public void InfoEx(object message, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void InfoEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, callerName + ": " + message, null);
+            WriteInternal(LogLevel.Info, callerMemberName + ": " + message, null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -791,11 +793,11 @@ namespace PortableLog.NLog
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Info, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -807,16 +809,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void InfoFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void InfoFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Info, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -827,11 +829,11 @@ namespace PortableLog.NLog
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Info, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -839,31 +841,32 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public override void InfoFormat(string format, Exception exception, params object[] args)
+        public override void InfoFormat(Exception exception, string format, params object[] args)
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Info, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Info" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
-        /// <param name="callerName"></param>
-        public void InfoFormatEx(string format, object[] args, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void InfoFormatEx(string format, object[] args, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsInfoEnabled)
                 return;
-            WriteInternal(LogLevel.Info, new StringFormatFormattedMessage(null, callerName + ": " + format, args), null);
+            WriteInternal(LogLevel.Info, new StringFormatter(null, callerMemberName + ": " + format, args),
+                null);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Trace(object message)
@@ -874,13 +877,13 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Trace" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Trace" /> level including
         ///     the stack trace of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        public override void Trace(object message, Exception exception)
+        public override void Trace(Exception exception, object message)
         {
             if (!IsTraceEnabled)
                 return;
@@ -888,22 +891,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Trace(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Trace(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Trace, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -911,15 +914,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        public override void Trace(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Trace(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Trace, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -930,16 +933,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Trace(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsTraceEnabled)
                 return;
             WriteInternal(LogLevel.Trace,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -951,29 +954,37 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        public override void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Trace(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsTraceEnabled)
                 return;
             WriteInternal(LogLevel.Trace,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
-        /// <param name="callerName"></param>
-        public void TraceEx(object message, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void TraceEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, callerName + ": " + message, null);
+            WriteInternal(LogLevel.Trace, callerMemberName + ": " + message, null);
+        }
+
+        public void TraceFormatEx(string format, object[] args, string callerMemberName = "")
+        {
+            if (!IsTraceEnabled)
+                return;
+            WriteInternal(LogLevel.Trace, new StringFormatter(null, callerMemberName + ": " + format, args),
+                null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -988,11 +999,11 @@ namespace PortableLog.NLog
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Trace, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -1004,16 +1015,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void TraceFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void TraceFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Trace, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -1024,11 +1035,11 @@ namespace PortableLog.NLog
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Trace, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Trace" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -1036,15 +1047,15 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public new virtual void TraceFormat(string format, Exception exception, params object[] args)
+        public new void TraceFormat(Exception exception, string format, params object[] args)
         {
             if (!IsTraceEnabled)
                 return;
-            WriteInternal(LogLevel.Trace, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Trace, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         public override void Warn(object message)
@@ -1056,13 +1067,13 @@ namespace PortableLog.NLog
 
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Warn" /> level including
+        ///     Log a message object with the <see cref="F:LogLevel.Warn" /> level including
         ///     the stack Warn of the <see cref="T:System.Exception" /> passed
         ///     as a parameter.
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        public override void Warn(object message, Exception exception)
+        public override void Warn(Exception exception, object message)
         {
             if (!IsWarnEnabled)
                 return;
@@ -1070,22 +1081,22 @@ namespace PortableLog.NLog
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Warn(Action<FormatMessageHandler> formatMessageCallback)
+        public override void Warn(Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new FormatMessageCallbackFormattedMessage(formatMessageCallback), null);
+            WriteInternal(LogLevel.Warn, new CallbackStringFormatter(formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -1093,15 +1104,15 @@ namespace PortableLog.NLog
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        public override void Warn(Action<FormatMessageHandler> formatMessageCallback, Exception exception)
+        public override void Warn(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new FormatMessageCallbackFormattedMessage(formatMessageCallback), exception);
+            WriteInternal(LogLevel.Warn, new CallbackStringFormatter(formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -1112,16 +1123,16 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback)
+        public override void Warn(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsWarnEnabled)
                 return;
             WriteInternal(LogLevel.Warn,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), null);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level using a callback to obtain the message
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
         /// </summary>
         /// <remarks>
         ///     Using this method avoids the cost of creating a message and evaluating message arguments
@@ -1133,36 +1144,36 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        public override void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception)
+        public override void Warn(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsWarnEnabled)
                 return;
             WriteInternal(LogLevel.Warn,
-                new FormatMessageCallbackFormattedMessage(formatProvider, formatMessageCallback), exception);
+                new CallbackStringFormatter(formatProvider, formatMessageCallback), exception);
         }
 
         /// <summary>
-        ///     Log a message object with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message object with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="message">The message object to log.</param>
-        /// <param name="callerName"></param>
-        public void WarnEx(object message, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void WarnEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, callerName + ": " + message, null);
+            WriteInternal(LogLevel.Warn, callerMemberName + ": " + message, null);
         }
 
-        public void WarnEx(object message, Exception exception, [CallerMemberName] string callerName = "")
+        public void WarnEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, callerName + ": " + message, exception);
+            WriteInternal(LogLevel.Warn, callerMemberName + ": " + message, exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -1177,11 +1188,11 @@ namespace PortableLog.NLog
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new StringFormatFormattedMessage(formatProvider, format, args), null);
+            WriteInternal(LogLevel.Warn, new StringFormatter(formatProvider, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
@@ -1193,16 +1204,16 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        public override void WarnFormat(IFormatProvider formatProvider, string format, Exception exception,
+        public override void WarnFormat(Exception exception, IFormatProvider formatProvider, string format,
             params object[] args)
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new StringFormatFormattedMessage(formatProvider, format, args), exception);
+            WriteInternal(LogLevel.Warn, new StringFormatter(formatProvider, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -1213,11 +1224,11 @@ namespace PortableLog.NLog
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new StringFormatFormattedMessage(null, format, args), null);
+            WriteInternal(LogLevel.Warn, new StringFormatter(null, format, args), null);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -1225,27 +1236,46 @@ namespace PortableLog.NLog
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        public override void WarnFormat(string format, Exception exception, params object[] args)
+        public override void WarnFormat(Exception exception, string format, params object[] args)
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new StringFormatFormattedMessage(null, format, args), exception);
+            WriteInternal(LogLevel.Warn, new StringFormatter(null, format, args), exception);
         }
 
         /// <summary>
-        ///     Log a message with the <see cref="F:Common.Logging.LogLevel.Warn" /> level.
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
         /// </summary>
         /// <param name="format">
         ///     The format of the message object to log.
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
-        /// <param name="callerName"></param>
-        public void WarnFormatEx(string format, object[] args, [CallerMemberName] string callerName = "")
+        /// <param name="callerMemberName"></param>
+        public void WarnFormatEx(string format, object[] args, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;
-            WriteInternal(LogLevel.Warn, new StringFormatFormattedMessage(null, callerName + ": " + format, args), null);
+            WriteInternal(LogLevel.Warn, new StringFormatter(null, callerMemberName + ": " + format, args),
+                null);
+        }
+
+        /// <summary>
+        ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
+        /// </summary>
+        /// <param name="format">
+        ///     The format of the message object to log.
+        ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
+        /// </param>
+        /// <param name="exception">The exception to log.</param>
+        /// <param name="args">the list of format arguments</param>
+        /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
+        public void WarnFormatEx(Exception exception, string format, object[] args, string callerMemberName = "")
+        {
+            if (!IsWarnEnabled)
+                return;
+            WriteInternal(LogLevel.Warn, new StringFormatter(null, callerMemberName + ": " + format, args),
+                exception);
         }
 
         /// <summary>

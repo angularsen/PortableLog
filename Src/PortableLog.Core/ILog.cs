@@ -50,7 +50,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Debug(object message, Exception exception);
+        void Debug(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
@@ -60,7 +60,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Debug(Action<FormatMessageHandler> formatMessageCallback);
+        void Debug(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
@@ -71,7 +71,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Debug(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Debug(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
@@ -85,7 +85,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Debug(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level using a callback to obtain the message
@@ -100,8 +100,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Debug.</param>
-        void Debug(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Debug(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
@@ -122,7 +122,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void DebugFormat(string format, Exception exception, params object[] args);
+        void DebugFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
@@ -151,7 +151,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void DebugFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void DebugFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Error" /> level.
@@ -166,7 +166,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Error(object message, Exception exception);
+        void Error(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
@@ -176,7 +176,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Error(Action<FormatMessageHandler> formatMessageCallback);
+        void Error(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
@@ -187,7 +187,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Error(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Error(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
@@ -201,7 +201,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Error(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level using a callback to obtain the message
@@ -216,8 +216,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Error.</param>
-        void Error(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Error(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
@@ -238,7 +238,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void ErrorFormat(string format, Exception exception, params object[] args);
+        void ErrorFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
@@ -267,7 +267,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void ErrorFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Fatal" /> level.
@@ -282,7 +282,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Fatal(object message, Exception exception);
+        void Fatal(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
@@ -292,7 +292,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Fatal(Action<FormatMessageHandler> formatMessageCallback);
+        void Fatal(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
@@ -303,7 +303,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Fatal(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Fatal(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
@@ -317,7 +317,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Fatal(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level using a callback to obtain the message
@@ -332,8 +332,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Fatal.</param>
-        void Fatal(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Fatal(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
@@ -354,7 +354,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void FatalFormat(string format, Exception exception, params object[] args);
+        void FatalFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Fatal" /> level.
@@ -383,7 +383,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void FatalFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void FatalFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Info" /> level.
@@ -398,7 +398,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Info(object message, Exception exception);
+        void Info(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
@@ -408,7 +408,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Info(Action<FormatMessageHandler> formatMessageCallback);
+        void Info(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
@@ -419,7 +419,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Info(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Info(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
@@ -433,7 +433,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Info(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level using a callback to obtain the message
@@ -448,8 +448,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Info.</param>
-        void Info(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Info(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
@@ -470,7 +470,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void InfoFormat(string format, Exception exception, params object[] args);
+        void InfoFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
@@ -499,7 +499,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void InfoFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void InfoFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Trace" /> level.
@@ -514,7 +514,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Trace(object message, Exception exception);
+        void Trace(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
@@ -524,7 +524,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Trace(Action<FormatMessageHandler> formatMessageCallback);
+        void Trace(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
@@ -535,7 +535,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Trace(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Trace(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
@@ -549,7 +549,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Trace(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level using a callback to obtain the message
@@ -564,8 +564,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Trace(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Trace(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
@@ -586,7 +586,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void TraceFormat(string format, Exception exception, params object[] args);
+        void TraceFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
@@ -615,7 +615,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void TraceFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void TraceFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Warn" /> level.
@@ -630,7 +630,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Warn(object message, Exception exception);
+        void Warn(Exception exception, object message);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
@@ -640,7 +640,7 @@ namespace PortableLog.Core
         ///     that probably won't be logged due to loglevel settings.
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Warn(Action<FormatMessageHandler> formatMessageCallback);
+        void Warn(Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
@@ -651,7 +651,7 @@ namespace PortableLog.Core
         /// </remarks>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack trace.</param>
-        void Warn(Action<FormatMessageHandler> formatMessageCallback, Exception exception);
+        void Warn(Exception exception, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
@@ -665,7 +665,7 @@ namespace PortableLog.Core
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback);
+        void Warn(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level using a callback to obtain the message
@@ -680,8 +680,8 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
         /// <param name="exception">The exception to log, including its stack Warn.</param>
-        void Warn(IFormatProvider formatProvider, Action<FormatMessageHandler> formatMessageCallback,
-            Exception exception);
+        void Warn(Exception exception, IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
@@ -702,7 +702,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
-        void WarnFormat(string format, Exception exception, params object[] args);
+        void WarnFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
@@ -731,6 +731,6 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
-        void WarnFormat(IFormatProvider formatProvider, string format, Exception exception, params object[] args);
+        void WarnFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
     }
 }
