@@ -1,4 +1,5 @@
 ﻿using System;
+using PortableLog.Core.Properties;
 
 namespace PortableLog.Core
 {
@@ -111,6 +112,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void DebugFormat(string format, params object[] args);
 
         /// <summary>
@@ -122,6 +124,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void DebugFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -136,6 +139,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void DebugFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -151,6 +155,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void DebugFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -227,6 +232,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void ErrorFormat(string format, params object[] args);
 
         /// <summary>
@@ -238,6 +244,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void ErrorFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -252,6 +259,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void ErrorFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -267,6 +275,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void ErrorFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -343,6 +352,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void FatalFormat(string format, params object[] args);
 
         /// <summary>
@@ -354,6 +364,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void FatalFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -368,6 +379,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void FatalFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -383,6 +395,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void FatalFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -459,6 +472,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void InfoFormat(string format, params object[] args);
 
         /// <summary>
@@ -470,6 +484,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void InfoFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -484,6 +499,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void InfoFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -499,6 +515,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void InfoFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -575,6 +592,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void TraceFormat(string format, params object[] args);
 
         /// <summary>
@@ -586,6 +604,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void TraceFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -600,6 +619,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void TraceFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -615,6 +635,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void TraceFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -691,6 +712,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void WarnFormat(string format, params object[] args);
 
         /// <summary>
@@ -702,6 +724,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args">the list of format arguments</param>
+        [StringFormatMethod("format")]
         void WarnFormat(Exception exception, string format, params object[] args);
 
         /// <summary>
@@ -716,6 +739,7 @@ namespace PortableLog.Core
         ///     <see cref="M:System.String.Format(System.String,System.Object[])" />
         /// </param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void WarnFormat(IFormatProvider formatProvider, string format, params object[] args);
 
         /// <summary>
@@ -731,6 +755,7 @@ namespace PortableLog.Core
         /// </param>
         /// <param name="exception">The exception to log.</param>
         /// <param name="args" />
+        [StringFormatMethod("format")]
         void WarnFormat(Exception exception, IFormatProvider formatProvider, string format, params object[] args);
     }
 }
