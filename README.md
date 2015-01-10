@@ -1,4 +1,4 @@
-Portable Logging
+PortableLog
 ===========
 
 Portable logging interface and adapters to the most common logging implementations. Heavily based on [common-logging](https://github.com/net-commons/common-logging), but with a couple of improvements:
