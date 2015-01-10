@@ -3,7 +3,7 @@ PortableLog
 
 Portable logging interface and adapters to the most common logging implementations. Heavily based on [common-logging](https://github.com/net-commons/common-logging), but with a couple of improvements:
 * Move exception parameter first, better readability with ```params object[] args```
-* ILogEx extends ILog with InfoEx, WarnEx with [[CallingMemberName]](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callermembernameattribute%28v=vs.110%29.aspx) to inject the method name
+* ILogEx adds InfoEx, WarnEx and similar with [[CallingMemberName]](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callermembernameattribute%28v=vs.110%29.aspx) to inject the method name
 * [PortableLog.Core nuget](https://www.nuget.org/packages/PortableLog.Core) with ILog, ILogEx and ILogExFactory to pass in to log producers, such as the portable view models of a cross-platform app
 * [PortableLog.NLog nuget](https://www.nuget.org/packages/PortableLog.NLog) with NLog adapter, to hook up in WPF, WinForms and WinStore. To my knowledge NLog does not yet work with Xamarin for iOS and Android, but adapters for other logging frameworks can easily be added. Pull requests are welcome.
 
