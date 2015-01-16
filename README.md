@@ -30,7 +30,8 @@ public class MyClass
     _log.InfoFormatEx("specify the args {0} {1}.", new object[]{"like", "this"});
     
     _log.InfoEx("That means you lose ReSharper intellisense on those args.");
-    _log.InfoEx(string.Format("But you can always log like this if {0} prefer.", "you"));
+    _log.InfoEx(string.Format("But you can always log like this if {0} prefer,", "you"));
+    _log.InfoEx("or with an extension method for a {0} syntax.".With("shorter"));
     
     try 
     {
@@ -53,5 +54,28 @@ Yields:
   MyClass.MyMethod: Format arguments with 'params' keyword does not work too well
   MyClass.MyMethod: with [CallerMemberName], so you need to 
   MyClass.MyMethod: specify the args like this.
+  MyClass.MyMethod: That means you lose ReSharper intellisense on those args.
+  MyClass.MyMethod: But you can always log like this if you prefer,
+  MyClass.MyMethod: or with an extension method for a shorter syntax.
   MyClass.MyMethod: On exit.
+```
+
+StringExtensions
+==
+Copy this class to your project to use the With() extension. The StringFormatMethod attributes are just intellisense hints to the ReSharper plugin and can be removed.
+```csharp
+internal static class StringExtensions
+{
+    [JetBrains.Annotations.StringFormatMethod("format")]
+    public static string With(this string format, IFormatProvider provider, params object[] args)
+    {
+        return string.Format(provider, format, args);
+    }
+
+    [JetBrains.Annotations.StringFormatMethod("format")]
+    public static string With(this string format, params object[] args)
+    {
+        return string.Format(format, args);
+    }
+}
 ```
