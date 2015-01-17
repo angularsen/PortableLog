@@ -1177,7 +1177,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
-        ///     Warnrmation.
+        ///     information.
         /// </param>
         /// <param name="format">
         ///     The format of the message object to log.
@@ -1196,7 +1196,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="formatProvider">
         ///     An <see cref="T:System.IFormatProvider" /> that supplies culture-specific formatting
-        ///     Warnrmation.
+        ///     information.
         /// </param>
         /// <param name="format">
         ///     The format of the message object to log.
