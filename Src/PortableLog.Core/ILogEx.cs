@@ -11,7 +11,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void DebugEx(string message, [CallerMemberName] string callerMemberName = "");
+        void DebugEx(object message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Debug" /> level.
@@ -30,7 +30,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void ErrorEx(string message, [CallerMemberName] string callerMemberName = "");
+        void ErrorEx(object message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
@@ -38,7 +38,7 @@ namespace PortableLog.Core
         /// <param name="exception">The exception to log, including its stack trace.</param>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void ErrorEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "");
+        void ErrorEx(Exception exception, string message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Error" /> level.
@@ -57,7 +57,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void InfoEx(string message, [CallerMemberName] string callerMemberName = "");
+        void InfoEx(object message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Info" /> level.
@@ -77,7 +77,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void TraceEx(string message, [CallerMemberName] string callerMemberName = "");
+        void TraceEx(object message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Trace" /> level.
@@ -96,7 +96,7 @@ namespace PortableLog.Core
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void WarnEx(string message, [CallerMemberName] string callerMemberName = "");
+        void WarnEx(object message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.
@@ -104,7 +104,7 @@ namespace PortableLog.Core
         /// <param name="exception">The exception to log, including its stack trace.</param>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName">Name of method or property calling this method. Will be included in log message.</param>
-        void WarnEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "");
+        void WarnEx(Exception exception, string message, [CallerMemberName] string callerMemberName = "");
 
         /// <summary>
         ///     Log a message with the <see cref="F:LogLevel.Warn" /> level.

@@ -4,15 +4,15 @@ using NLogLib = NLog;
 
 namespace PortableLog.NLog
 {
-    public class NLogLogExFactory : ILogExFactory
+    public class NLogFactory : ILogFactory
     {
         private readonly bool _useFullTypeName;
 
-        public NLogLogExFactory() : this(false)
+        public NLogFactory() : this(false)
         {
         }
 
-        public NLogLogExFactory(bool useFullTypeName)
+        public NLogFactory(bool useFullTypeName)
         {
             _useFullTypeName = useFullTypeName;
         }

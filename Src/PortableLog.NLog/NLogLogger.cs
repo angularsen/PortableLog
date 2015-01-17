@@ -163,7 +163,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Debug(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Debug(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsDebugEnabled)
                 return;
@@ -198,7 +199,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void DebugEx(string message, [CallerMemberName] string callerMemberName = "")
+        public void DebugEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsDebugEnabled)
                 return;
@@ -361,7 +362,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Error(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Error(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsErrorEnabled)
                 return;
@@ -396,14 +398,14 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void ErrorEx(string message, [CallerMemberName] string callerMemberName = "")
+        public void ErrorEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
             WriteInternal(LogLevel.Error, callerMemberName + ": " + message, null);
         }
 
-        public void ErrorEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "")
+        public void ErrorEx(Exception exception, string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsErrorEnabled)
                 return;
@@ -566,7 +568,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Fatal(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Fatal(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsFatalEnabled)
                 return;
@@ -735,7 +738,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Info(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Info(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsInfoEnabled)
                 return;
@@ -770,7 +774,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void InfoEx(string message, [CallerMemberName] string callerMemberName = "")
+        public void InfoEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsInfoEnabled)
                 return;
@@ -933,7 +937,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Trace(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Trace(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsTraceEnabled)
                 return;
@@ -968,7 +973,7 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void TraceEx(string message, [CallerMemberName] string callerMemberName = "")
+        public void TraceEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsTraceEnabled)
                 return;
@@ -1065,7 +1070,6 @@ namespace PortableLog.NLog
             WriteInternal(LogLevel.Warn, message, null);
         }
 
-
         /// <summary>
         ///     Log a message object with the <see cref="F:LogLevel.Warn" /> level including
         ///     the stack Warn of the <see cref="T:System.Exception" /> passed
@@ -1123,7 +1127,8 @@ namespace PortableLog.NLog
         ///     information.
         /// </param>
         /// <param name="formatMessageCallback">A callback used by the logger to obtain the message if log level is matched</param>
-        public override void Warn(IFormatProvider formatProvider, Func<FormatMessageHandler, string> formatMessageCallback)
+        public override void Warn(IFormatProvider formatProvider,
+            Func<FormatMessageHandler, string> formatMessageCallback)
         {
             if (!IsWarnEnabled)
                 return;
@@ -1158,14 +1163,14 @@ namespace PortableLog.NLog
         /// </summary>
         /// <param name="message">The message object to log.</param>
         /// <param name="callerMemberName"></param>
-        public void WarnEx(string message, [CallerMemberName] string callerMemberName = "")
+        public void WarnEx(object message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;
             WriteInternal(LogLevel.Warn, callerMemberName + ": " + message, null);
         }
 
-        public void WarnEx(Exception exception, object message, [CallerMemberName] string callerMemberName = "")
+        public void WarnEx(Exception exception, string message, [CallerMemberName] string callerMemberName = "")
         {
             if (!IsWarnEnabled)
                 return;

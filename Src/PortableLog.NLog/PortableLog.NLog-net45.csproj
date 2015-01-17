@@ -34,10 +34,6 @@
     <Reference Include="NLog">
       <HintPath>..\..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PortableLog.Core, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\PortableLog.Core.1.0.2\lib\portable-net45+wp80+win8+wpa81\PortableLog.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.PortableLog.NLog-net45.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PortableLog.Core\PortableLog.Core-portable-net45-profile259.csproj">
+      <Project>{e15ca659-0508-4b22-b7d5-ced4e37c72d2}</Project>
+      <Name>PortableLog.Core-portable-net45-profile259</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

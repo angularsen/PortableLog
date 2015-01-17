@@ -2,7 +2,7 @@
 
 namespace PortableLog.Core
 {
-    public interface ILogExFactory
+    public interface ILogFactory
     {
         ILogEx GetLogger(string loggerName);
         ILogEx GetLogger(Type type);

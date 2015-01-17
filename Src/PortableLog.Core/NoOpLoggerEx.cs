@@ -679,7 +679,7 @@ namespace PortableLog.Core
             // NOP - no operation
         }
 
-        public void DebugEx(string message, string callerName = "")
+        public void DebugEx(object message, string callerName = "")
         {
         }
 
@@ -687,11 +687,11 @@ namespace PortableLog.Core
         {
         }
 
-        public void ErrorEx(string message, string callerName = "")
+        public void ErrorEx(object message, string callerName = "")
         {
         }
 
-        public void ErrorEx(Exception exception, object message, string callerName = "")
+        public void ErrorEx(Exception exception, string message, string callerName = "")
         {
         }
 
@@ -699,7 +699,7 @@ namespace PortableLog.Core
         {
         }
 
-        public void InfoEx(string message, string callerName = "")
+        public void InfoEx(object message, string callerName = "")
         {
         }
 
@@ -707,7 +707,7 @@ namespace PortableLog.Core
         {
         }
 
-        public void TraceEx(string message, string callerName = "")
+        public void TraceEx(object message, string callerName = "")
         {
         }
 
@@ -715,11 +715,11 @@ namespace PortableLog.Core
         {
         }
 
-        public void WarnEx(string message, string callerName = "")
+        public void WarnEx(object message, string callerName = "")
         {
         }
 
-        public void WarnEx(Exception exception, object message, string callerName = "")
+        public void WarnEx(Exception exception, string message, string callerName = "")
         {
         }
 
