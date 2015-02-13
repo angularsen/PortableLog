@@ -6,17 +6,17 @@ namespace PortableLog.Core
     {
         public ILogEx GetLogger(string loggerName)
         {
-            return new NoOpLoggerEx();
+            return new NoOpLogger();
         }
 
         public ILogEx GetLogger(Type type)
         {
-            return new NoOpLoggerEx();
+            return new NoOpLogger();
         }
 
         public ILogEx GetLogger<T>()
         {
-            return new NoOpLoggerEx();
+            return new NoOpLogger();
         }
     }
 }

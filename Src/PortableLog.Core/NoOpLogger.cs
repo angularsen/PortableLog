@@ -5,7 +5,7 @@ namespace PortableLog.Core
     /// <summary>
     ///     Silently ignores all log messages.
     /// </summary>
-    public sealed class NoOpLoggerEx : ILogEx
+    public sealed class NoOpLogger : ILogEx
     {
         /// <summary>
         ///     Always returns <see langword="false" />.

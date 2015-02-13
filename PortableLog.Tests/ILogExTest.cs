@@ -10,7 +10,7 @@ namespace PortableLog.Tests
         [Test]
         public void DoesNotHaveAmbiguousOverloads()
         {
-            var l = new NoOpLoggerEx() as ILogEx;
+            var l = new NoOpLogger() as ILogEx;
             var e = new Exception();
 
             l.InfoEx("");
