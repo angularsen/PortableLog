@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>PortableLog.NLog</id>
-    <version>1.0.2</version>
-    <title>Portable Logging for NLog</title>
+    <version>2.0.0-alpha</version>
+    <title>PortableLog - NLog adapter</title>
     <authors>Andreas Gullberg Larsen</authors>
     <owners>Andreas Gullberg Larsen</owners>
     <licenseUrl>https://github.com/anjdreas/PortableLog/blob/dev/LICENSE</licenseUrl>
     <projectUrl>https://github.com/anjdreas/PortableLog</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Wire up your logging with the NLog logging framework.</description>
-    <summary>Adapter for NLog logging framework.</summary>
-    <releaseNotes>Initial release.</releaseNotes>
+    <summary>Adapter for NLog.</summary>
+    <releaseNotes>Updated to v2 core.</releaseNotes>
     <copyright>Copyright © 2015 Andreas Gullberg Larsen</copyright>
     <language>en-US</language>
     <tags>log logging portable pcl interface wrapper adapter</tags>

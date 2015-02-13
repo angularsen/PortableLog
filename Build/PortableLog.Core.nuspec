@@ -2,16 +2,27 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>PortableLog.Core</id>
-    <version>1.0.2</version>
-    <title>Portable Logging</title>
+    <version>2.0.0-alpha</version>
+    <title>PortableLog</title>
     <authors>Andreas Gullberg Larsen</authors>
     <owners>Andreas Gullberg Larsen</owners>
     <licenseUrl>https://github.com/anjdreas/PortableLog/blob/dev/LICENSE</licenseUrl>
     <projectUrl>https://github.com/anjdreas/PortableLog</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
-    <description>Light-weight and portable logging interface. Combine with existing PortableLog adapters for logging frameworks or write your own.</description>
-    <summary>Light-weight and portable logging interface.</summary>
-    <releaseNotes>Initial release.</releaseNotes>
+    <description>Light-weight, portable logging interface. Combine with PortableLog adapters for logging frameworks or write your own.</description>
+    <summary>Light-weight, portable logging interface.</summary>
+    <releaseNotes>Simplify the API and implementation.
+
+Removed -Format method overloads, after some use it seemed better to use string.Format() explicitly or string extension methods like format.With(args).
+This removed the need for ILogEx to resolve the overload ambiguities and simplified the API overall.
+
+Breaking changes:
+* Remove ILogEx
+* Remove -Ex log method overloads
+* Remove -Format log method overloads
+* Rename some types to simpler names, such as ILogExFactory to ILogFactory
+* Change log method signatures to resolve ambiguity in overloads
+    </releaseNotes>
     <copyright>Copyright © 2015 Andreas Gullberg Larsen</copyright>
     <language>en-US</language>
     <tags>log logging portable pcl interface wrapper adapter</tags>
