@@ -1,4 +1,4 @@
-using PortableLog.Core.Properties;
+using JetBrains.Annotations;
 
 namespace PortableLog.Core
 {
@@ -10,7 +10,6 @@ namespace PortableLog.Core
     ///     The format argument as in <see cref="M:System.String.Format(System.String,System.Object[])" />
     /// </param>
     /// <param name="args">The argument list as in <see cref="M:System.String.Format(System.String,System.Object[])" /></param>
-    /// <seealso cref="ILog.InfoFormat(string,object[])" />
     [StringFormatMethod("format")]
     public delegate string FormatMessageHandler(string format, params object[] args);
 }

@@ -1,20 +1,22 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace PortableLog.Core
 {
+    [PublicAPI]
     public class NoOpLogFactory : ILogFactory
     {
-        public ILogEx GetLogger(string loggerName)
+        public ILog GetLogger(string loggerName)
         {
             return new NoOpLogger();
         }
 
-        public ILogEx GetLogger(Type type)
+        public ILog GetLogger(Type type)
         {
             return new NoOpLogger();
         }
 
-        public ILogEx GetLogger<T>()
+        public ILog GetLogger<T>()
         {
             return new NoOpLogger();
         }

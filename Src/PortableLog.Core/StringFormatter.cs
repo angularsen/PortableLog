@@ -1,5 +1,5 @@
 ﻿using System;
-using PortableLog.Core.Properties;
+using JetBrains.Annotations;
 
 namespace PortableLog.Core
 {

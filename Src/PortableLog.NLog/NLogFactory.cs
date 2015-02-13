@@ -1,9 +1,11 @@
 using System;
 using PortableLog.Core;
+using JetBrains.Annotations;
 using NLogLib = NLog;
 
 namespace PortableLog.NLog
 {
+    [PublicAPI]
     public class NLogFactory : ILogFactory
     {
         private readonly bool _useFullTypeName;
@@ -17,17 +19,17 @@ namespace PortableLog.NLog
             _useFullTypeName = useFullTypeName;
         }
 
-        public ILogEx GetLogger(string loggerName)
+        public ILog GetLogger(string loggerName)
         {
             return new NLogLogger(NLogLib.LogManager.GetLogger(loggerName));
         }
 
-        public ILogEx GetLogger(Type type)
+        public ILog GetLogger(Type type)
         {
             return GetLogger(_useFullTypeName ? type.FullName : type.Name);
         }
 
-        public ILogEx GetLogger<T>()
+        public ILog GetLogger<T>()
         {
             return GetLogger(typeof (T));
         }

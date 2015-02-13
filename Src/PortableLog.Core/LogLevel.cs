@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace PortableLog.Core
 {
+    [PublicAPI]
     public enum LogLevel
     {
         All,

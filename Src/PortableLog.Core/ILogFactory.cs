@@ -1,11 +1,13 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace PortableLog.Core
 {
+    [PublicAPI]
     public interface ILogFactory
     {
-        ILogEx GetLogger(string loggerName);
-        ILogEx GetLogger(Type type);
-        ILogEx GetLogger<T>();
+        ILog GetLogger(string loggerName);
+        ILog GetLogger(Type type);
+        ILog GetLogger<T>();
     }
 }
