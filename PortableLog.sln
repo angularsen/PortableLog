@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortableLog.NLog-net45", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9151E332-D2B4-4AE7-8E30-43D75B42AC10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortableLog.Tests", "PortableLog.Tests\PortableLog.Tests.csproj", "{6BFCF5C2-86B5-439F-A314-5129DD4F65B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortableLog.Tests", "Tests\PortableLog.Tests\PortableLog.Tests.csproj", "{6BFCF5C2-86B5-439F-A314-5129DD4F65B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

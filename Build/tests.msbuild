@@ -17,7 +17,7 @@
 
   <Target Name="CompileProjects">
 
-    <MSBuild Projects="$(TestsSrcPath)\PortableLog.Tests.csproj"
+    <MSBuild Projects="$(TestsSrcPath)\PortableLog.Tests\PortableLog.Tests.csproj"
        Properties="Platform=$(Platform);Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion);AllowUnsafeBlocks=true"
        Targets="Build">
     </MSBuild>
