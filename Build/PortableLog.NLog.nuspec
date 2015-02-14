@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>PortableLog.NLog</id>
-    <version>2.0.0-alpha</version>
+    <version>2.0.0-alpha2</version>
     <title>PortableLog - NLog adapter</title>
     <authors>Andreas Gullberg Larsen</authors>
     <owners>Andreas Gullberg Larsen</owners>
@@ -16,7 +16,7 @@
     <language>en-US</language>
     <tags>log logging portable pcl interface wrapper adapter</tags>
     <dependencies>
-      <dependency id="PortableLog.Core" version="2.0.0" />
+      <dependency id="PortableLog.Core" version="2.0.0-alpha2" />
     </dependencies>
   </metadata>
   <files>
