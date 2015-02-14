@@ -1,6 +1,10 @@
 PortableLog
 ===========
 
+*Version 2 is underway. [Read more](https://github.com/anjdreas/PortableLog/wiki/PortableLog-v2) or get the [pre-release nuget](https://www.nuget.org/packages/PortableLog.Core/2.0.0-alpha2).*
+
+--
+
 Portable logging interface and adapters to the most common logging implementations. Heavily based on [common-logging](https://github.com/net-commons/common-logging), but with a couple of improvements:
 * Move exception parameter first, better readability with ```params object[] args```
 * ILogEx adds InfoEx, WarnEx and similar with [[CallingMemberName]](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callermembernameattribute%28v=vs.110%29.aspx) to inject the method name
