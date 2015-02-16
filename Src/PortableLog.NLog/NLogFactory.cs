@@ -1,6 +1,6 @@
 using System;
 using PortableLog.Core;
-using JetBrains.Annotations;
+using PortableLog.NLog.Properties;
 using NLogLib = NLog;
 
 namespace PortableLog.NLog
