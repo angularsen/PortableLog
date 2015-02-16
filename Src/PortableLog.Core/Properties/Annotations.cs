@@ -28,7 +28,7 @@ namespace JetBrains.Annotations
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
         AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
-    //[Conditional("JETBRAINS_ANNOTATIONS")]
+    [Conditional("JETBRAINS_ANNOTATIONS")]
     public sealed class CanBeNullAttribute : Attribute
     {
     }
@@ -46,7 +46,7 @@ namespace JetBrains.Annotations
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
         AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
-    //[Conditional("JETBRAINS_ANNOTATIONS")]
+    [Conditional("JETBRAINS_ANNOTATIONS")]
     public sealed class NotNullAttribute : Attribute
     {
     }
@@ -89,7 +89,7 @@ namespace JetBrains.Annotations
     /// </example>
     [AttributeUsage(
         AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Delegate)]
-    //[Conditional("JETBRAINS_ANNOTATIONS")]
+    [Conditional("JETBRAINS_ANNOTATIONS")]
     public sealed class StringFormatMethodAttribute : Attribute
     {
         /// <param name="formatParameterName">
