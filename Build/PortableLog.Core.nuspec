@@ -29,9 +29,21 @@ Breaking changes:
     <dependencies>
       <group>
       </group>
+      <group targetFramework="net40, net40-client">
+        <dependency id="Microsoft.Bcl" version="1.1.9" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+      </group>
+      <group targetFramework="portable-net40">
+        <dependency id="Microsoft.Bcl" version="1.1.9" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+      </group>
       <group targetFramework="portable-net40+sl50+win+wpa81+wp80">
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+      </group>
+      <group targetFramework="net45, net451, portable-net45">
+      </group>
+      <group targetFramework="portable-net45+win+wpa81+wp80">
       </group>
     </dependencies>
   </metadata>
