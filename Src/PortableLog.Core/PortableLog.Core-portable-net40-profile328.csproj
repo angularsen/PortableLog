@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\**" />
+    <Compile Include="**\*.cs" Exclude="obj\**;**\*.Win32.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.IO">
