@@ -17,6 +17,7 @@
     <tags>log logging portable pcl interface wrapper adapter</tags>
     <dependencies>
       <dependency id="PortableLog.Core" version="2.0.0-alpha4" />
+      <dependency id="NLog" version="3.0.0.0"  />
     </dependencies>
   </metadata>
   <files>
