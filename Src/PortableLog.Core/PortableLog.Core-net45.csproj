@@ -11,7 +11,7 @@
     <AssemblyName>PortableLog.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <OutputPath>$(SolutionDir)\Artifacts\Src\$(Platform)_$(Configuration)\PortableLog.Core\net45\</OutputPath>
+    <OutputPath>..\..\Artifacts\Src\$(Platform)_$(Configuration)\PortableLog.Core\net45\</OutputPath>
     <IntermediateOutputPath>obj\net45\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.PortableLog.Core-net45.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
